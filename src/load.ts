@@ -68,7 +68,7 @@ export const loadRoles = (guild: Guild, backupData: BackupData): Promise<Role[]>
     });
 
     console.log('ROLES AWAIT 1');
-    let test = await Promise.all(rolePromises);
+    await Promise.all(rolePromises);
     console.log('ROLES AWAIT 2');
     return Promise.all(rolePromises);
 };
