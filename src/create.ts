@@ -127,15 +127,13 @@ export async function getChannels(guild: Guild, options: CreateOptions) {
             for (const child of children) {
                 console.log('children', child.name);
 
-                if (child.name != 'moderator-only') {
-                    // For each child channel
-                    if (child.type === ChannelType.GuildText || child.type === ChannelType.GuildNews) {
-                        const channelData: TextChannelData = await fetchTextChannelData(child as TextChannel, options); // Gets the channel data
-                        categoryData.children.push(channelData); // And then push the child in the categoryData
-                    } else {
-                        const channelData: VoiceChannelData = await fetchVoiceChannelData(child as VoiceChannel); // Gets the channel data
-                        categoryData.children.push(channelData); // And then push the child in the categoryData
-                    }
+                // For each child channel
+                if (child.type === ChannelType.GuildText || child.type === ChannelType.GuildNews) {
+                    const channelData: TextChannelData = await fetchTextChannelData(child as TextChannel, options); // Gets the channel data
+                    categoryData.children.push(channelData); // And then push the child in the categoryData
+                } else {
+                    const channelData: VoiceChannelData = await fetchVoiceChannelData(child as VoiceChannel); // Gets the channel data
+                    categoryData.children.push(channelData); // And then push the child in the categoryData
                 }
             }
             channels.categories.push(categoryData); // Update channels object
@@ -152,15 +150,13 @@ export async function getChannels(guild: Guild, options: CreateOptions) {
         for (const channel of others) {
             console.log('OTHERS', channel.name);
             
-            if (channel.name != 'moderator-only') {
-                // For each channel
-                if (channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildNews) {
-                    const channelData: TextChannelData = await fetchTextChannelData(channel as TextChannel, options); // Gets the channel data
-                    channels.others.push(channelData); // Update channels object
-                } else {
-                    const channelData: VoiceChannelData = await fetchVoiceChannelData(channel as VoiceChannel); // Gets the channel data
-                    channels.others.push(channelData); // Update channels object
-                }
+            // For each channel
+            if (channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildNews) {
+                const channelData: TextChannelData = await fetchTextChannelData(channel as TextChannel, options); // Gets the channel data
+                channels.others.push(channelData); // Update channels object
+            } else {
+                const channelData: VoiceChannelData = await fetchVoiceChannelData(channel as VoiceChannel); // Gets the channel data
+                channels.others.push(channelData); // Update channels object
             }
         }
         resolve(channels); // Returns the list of the channels
