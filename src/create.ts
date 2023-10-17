@@ -125,13 +125,17 @@ export async function getChannels(guild: Guild, options: CreateOptions) {
             // Gets the children channels of the category and sort them by position
             const children = category.children.cache.sort((a, b) => a.position - b.position).toJSON();
             for (const child of children) {
-                // For each child channel
-                if (child.type === ChannelType.GuildText || child.type === ChannelType.GuildNews) {
-                    const channelData: TextChannelData = await fetchTextChannelData(child as TextChannel, options); // Gets the channel data
-                    categoryData.children.push(channelData); // And then push the child in the categoryData
-                } else {
-                    const channelData: VoiceChannelData = await fetchVoiceChannelData(child as VoiceChannel); // Gets the channel data
-                    categoryData.children.push(channelData); // And then push the child in the categoryData
+                console.log('children', child.name);
+
+                if (child.name != 'moderator-only') {
+                    // For each child channel
+                    if (child.type === ChannelType.GuildText || child.type === ChannelType.GuildNews) {
+                        const channelData: TextChannelData = await fetchTextChannelData(child as TextChannel, options); // Gets the channel data
+                        categoryData.children.push(channelData); // And then push the child in the categoryData
+                    } else {
+                        const channelData: VoiceChannelData = await fetchVoiceChannelData(child as VoiceChannel); // Gets the channel data
+                        categoryData.children.push(channelData); // And then push the child in the categoryData
+                    }
                 }
             }
             channels.categories.push(categoryData); // Update channels object
