@@ -181,13 +181,13 @@ export const load = async (
                     // Clear the guild
                     await utilMaster.clearGuild(guild);
                 }
-                await Promise.all([
+                /*await Promise.all([
                     // Restore guild configuration
                     loadMaster.loadConfig(guild, backupData),
                     // Restore guild roles
                     loadMaster.loadRoles(guild, backupData),
                     // Restore guild channels
-                    //loadMaster.loadChannels(guild, backupData, options),
+                    loadMaster.loadChannels(guild, backupData, options),
                     // Restore afk channel and timeout
                     loadMaster.loadAFK(guild, backupData),
                     // Restore guild emojis
@@ -196,7 +196,30 @@ export const load = async (
                     loadMaster.loadBans(guild, backupData),
                     // Restore embed channel
                     loadMaster.loadEmbedChannel(guild, backupData)
-                ]);
+                ]);*/
+
+                // Restore guild configuration
+                console.log('TEST10');
+                await loadMaster.loadConfig(guild, backupData);
+                // Restore guild roles
+                console.log('TEST11');
+                await loadMaster.loadRoles(guild, backupData);
+                // Restore guild channels
+                console.log('TEST12');
+                await loadMaster.loadChannels(guild, backupData, options);
+                // Restore afk channel and timeout
+                console.log('TEST13');
+                await loadMaster.loadAFK(guild, backupData);
+                // Restore guild emojis
+                console.log('TEST14');
+                await loadMaster.loadEmojis(guild, backupData);
+                // Restore guild bans
+                console.log('TEST15');
+                await loadMaster.loadBans(guild, backupData);
+                // Restore embed channel
+                console.log('TEST16');
+                await loadMaster.loadEmbedChannel(guild, backupData);
+                console.log('TEST17');
             } catch (e) {
                 return reject(e);
             }
