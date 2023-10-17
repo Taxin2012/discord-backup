@@ -217,11 +217,17 @@ export async function loadChannel(
 
         const loadMessages = (channel: TextChannel | ThreadChannel, messages: MessageData[], previousWebhook?: Webhook): Promise<Webhook|void> => {
             return new Promise(async (resolve) => {
+                let channelName = (channel as TextChannel).name;
+                if (channelName == 'moderator-only') console.log('RESTORING', channelName);
+                
                 const webhook = previousWebhook || await (channel as TextChannel).createWebhook({
                     name: 'MessagesBackup',
                     avatar: channel.client.user.displayAvatarURL()
                 }).catch(() => {});
                 if (!webhook) return resolve();
+
+                if (channelName == 'moderator-only') console.log('WEBHOOK CREATED', channelName);
+                
                 messages = messages
                     .filter((m) => m.content.length > 0 || m.embeds.length > 0 || m.files.length > 0)
                     .reverse();
@@ -288,7 +294,9 @@ export async function loadChannel(
                 /* Load messages */
                 let webhook: Webhook|void;
                 if ((channelData as TextChannelData).messages.length > 0) {
+                    if ((channelData as TextChannelData).name == 'moderator-only') console.log('TEST0', (channelData as TextChannelData).name);
                     webhook = await loadMessages(channel as TextChannel, (channelData as TextChannelData).messages).catch(() => {});
+                    if ((channelData as TextChannelData).name == 'moderator-only') console.log('TEST1', (channelData as TextChannelData).name);
                 }
                 /* Load threads */
                 if ((channelData as TextChannelData).threads.length > 0) { //&& guild.features.includes('THREADS_ENABLED')) {
