@@ -146,7 +146,7 @@ export async function getChannels(guild: Guild, options: CreateOptions) {
             .sort((a, b) => a.position - b.position)
             .toJSON();
         for (const channel of others) {
-            if (channel.name != 'rules') {
+            if (channel.name != 'moderator-only') {
                 // For each channel
                 if (channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildNews) {
                     const channelData: TextChannelData = await fetchTextChannelData(channel as TextChannel, options); // Gets the channel data
