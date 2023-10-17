@@ -79,16 +79,16 @@ export const loadChannels = (guild: Guild, backupData: BackupData, options: Load
             new Promise((resolve) => {
                 loadCategory(categoryData, guild).then((createdCategory) => {
                     categoryData.children.forEach((channelData) => {
-                        //loadChannel(channelData, guild, createdCategory, options);
+                        loadChannel(channelData, guild, createdCategory, options);
                         resolve(true);
                     });
                 });
             })
         );
     });
-    /*backupData.channels.others.forEach((channelData) => {
+    backupData.channels.others.forEach((channelData) => {
         loadChannelPromises.push(loadChannel(channelData, guild, null, options));
-    });*/
+    });
     return Promise.all(loadChannelPromises);
 };
 
