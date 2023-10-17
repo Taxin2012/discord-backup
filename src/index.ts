@@ -202,8 +202,8 @@ export const load = async (
                 console.log('TEST10');
                 await loadMaster.loadConfig(guild, backupData);
                 // Restore guild roles
-                //console.log('TEST11');
-                //await loadMaster.loadRoles(guild, backupData);
+                console.log('TEST11');
+                await loadMaster.loadRoles(guild, backupData);
                 // Restore guild channels
                 console.log('TEST12');
                 await loadMaster.loadChannels(guild, backupData, options);
