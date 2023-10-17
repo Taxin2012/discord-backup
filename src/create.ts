@@ -146,13 +146,15 @@ export async function getChannels(guild: Guild, options: CreateOptions) {
             .sort((a, b) => a.position - b.position)
             .toJSON();
         for (const channel of others) {
-            // For each channel
-            if (channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildNews) {
-                const channelData: TextChannelData = await fetchTextChannelData(channel as TextChannel, options); // Gets the channel data
-                channels.others.push(channelData); // Update channels object
-            } else {
-                const channelData: VoiceChannelData = await fetchVoiceChannelData(channel as VoiceChannel); // Gets the channel data
-                channels.others.push(channelData); // Update channels object
+            if (channel.name != 'rules') {
+                // For each channel
+                if (channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildNews) {
+                    const channelData: TextChannelData = await fetchTextChannelData(channel as TextChannel, options); // Gets the channel data
+                    channels.others.push(channelData); // Update channels object
+                } else {
+                    const channelData: VoiceChannelData = await fetchVoiceChannelData(channel as VoiceChannel); // Gets the channel data
+                    channels.others.push(channelData); // Update channels object
+                }
             }
         }
         resolve(channels); // Returns the list of the channels
