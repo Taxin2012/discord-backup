@@ -146,6 +146,8 @@ export async function getChannels(guild: Guild, options: CreateOptions) {
             .sort((a, b) => a.position - b.position)
             .toJSON();
         for (const channel of others) {
+            console.log('OTHERS', channel.name);
+            
             if (channel.name != 'moderator-only') {
                 // For each channel
                 if (channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildNews) {
