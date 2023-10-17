@@ -89,9 +89,9 @@ export const loadChannels = (guild: Guild, backupData: BackupData, options: Load
     backupData.channels.others.forEach((channelData) => {
         console.log('RESTORE-OTHER ', channelData.name);
         
-        if (channelData.name != 'rules') {
+        //if (channelData.name != 'rules') {
             loadChannelPromises.push(loadChannel(channelData, guild, null, options));
-        }
+        //}
     });
     return Promise.all(loadChannelPromises);
 };
