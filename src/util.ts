@@ -218,7 +218,7 @@ export async function loadChannel(
         const loadMessages = (channel: TextChannel | ThreadChannel, messages: MessageData[], previousWebhook?: Webhook): Promise<Webhook|void> => {
             return new Promise(async (resolve) => {
                 let channelName = (channel as TextChannel).name;
-                console.log('RESTORING', channelName);
+                if (!category) console.log('RESTORING NOT CAT', channelName);
                 
                 const webhook = previousWebhook || await (channel as TextChannel).createWebhook({
                     name: 'MessagesBackup',
