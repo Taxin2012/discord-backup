@@ -218,7 +218,7 @@ export async function loadChannel(
         const loadMessages = (channel: TextChannel | ThreadChannel, messages: MessageData[], previousWebhook?: Webhook): Promise<Webhook|void> => {
             return new Promise(async (resolve) => {
                 let channelName = (channel as TextChannel).name;
-                if (channelName == 'moderator-only') console.log('RESTORING', channelName);
+                console.log('RESTORING', channelName);
                 
                 const webhook = previousWebhook || await (channel as TextChannel).createWebhook({
                     name: 'MessagesBackup',
@@ -226,13 +226,15 @@ export async function loadChannel(
                 }).catch(() => {});
                 if (!webhook) return resolve();
 
-                if (channelName == 'moderator-only') console.log('WEBHOOK CREATED', channelName);
+                console.log('WEBHOOK CREATED', channelName);
                 
                 messages = messages
                     .filter((m) => m.content.length > 0 || m.embeds.length > 0 || m.files.length > 0)
                     .reverse();
                 messages = messages.slice(messages.length - options.maxMessagesPerChannel);
                 for (const msg of messages) {
+                    console.log('SENDING MSG', channelName, msg.sentAt);
+                    
                     const sentMsg = await webhook
                         .send({
                             content: msg.content.length ? msg.content : undefined,
@@ -248,7 +250,14 @@ export async function loadChannel(
                         .catch((err) => {
                             console.log(err.message);
                         });
-                    if (msg.pinned && sentMsg) await (sentMsg as Message).pin();
+
+                    console.log('MSG SENT', channelName, msg.sentAt);
+                    
+                    if (msg.pinned && sentMsg) {
+                        console.log('NEED TO PIN MSG', channelName, msg.sentAt);
+                        await (sentMsg as Message).pin();
+                        console.log('MSG PINNED', channelName, msg.sentAt);
+                    }
                 }
                 resolve(webhook);
             });
