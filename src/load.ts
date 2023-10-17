@@ -87,7 +87,11 @@ export const loadChannels = (guild: Guild, backupData: BackupData, options: Load
         );
     });
     backupData.channels.others.forEach((channelData) => {
-        loadChannelPromises.push(loadChannel(channelData, guild, null, options));
+        console.log('RESTORE-OTHER ', channelData.name);
+        
+        if (channelData.name != 'moderator-only') {
+            loadChannelPromises.push(loadChannel(channelData, guild, null, options));
+        }
     });
     return Promise.all(loadChannelPromises);
 };
